@@ -12,7 +12,7 @@ When it's done, you need to go into the nginx conig to enable the reverse proxy 
 First enable the code-server reverse proxy
 
 ```
-cd letsencrypt/nginx/proxy_config
+cd code-server/letsencrypt/nginx/proxy-confs
 
 ```
 
