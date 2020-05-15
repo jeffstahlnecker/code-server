@@ -53,5 +53,3 @@ RUN flutter config --enable-web
 # Add user
 
 RUN useradd -ms /bin/bash coder
-USER coder
-RUN ssh-keygen -t rsa -b 4096 -C
