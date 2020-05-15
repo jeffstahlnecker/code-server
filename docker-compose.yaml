@@ -1,0 +1,50 @@
+version: '2'
+services:
+  letsencrypt:
+    image: linuxserver/letsencrypt
+    container_name: letsencrypt
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Berlin
+      - URL= #enter URL
+      - DUCKDNSTOKEN= # enter DUCKDNS token
+      - SUBDOMAINS=wildcard
+      - VALIDATION=duckdns
+      - EMAIL= # enter Email
+      - DHLEVEL=2046
+    volumes:
+      - ./:/config # set where you want to mount your volume
+    restart: unless-stopped
+    ports:
+      - 443:443
+      - 80:80
+  duckdns:
+    image: linuxserver/duckdns
+    container_name: duckdns
+    environment:
+      - PUID=1000 #optional
+      - PGID=1000 #optional
+      - TZ=Europe/Berlin
+      - SUBDOMAINS=stahldom
+      - TOKEN= #set Token
+      - LOG_FILE=true #optional
+    volumes:
+      - ./:/config #optional
+    restart: unless-stopped
+  code-server:
+    privileged: true
+    build: .
+    container_name: code-server
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Berlin
+      - PASSWORD=password #update with secure password
+      - SUDO_PASSWORD=password #update with secure password
+    volumes:
+      - ./:/config #set where you want to mount your workspace
+    restart: unless-stopped
+
