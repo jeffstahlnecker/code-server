@@ -11,11 +11,11 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Europe/Berlin
-      - URL= #enter URL
-      - DUCKDNSTOKEN= # enter DUCKDNS token
+      - URL=${URL} #enter URL
+      - DUCKDNSTOKEN=${DUCKDNSTOKEN} # enter DUCKDNS token
       - SUBDOMAINS=wildcard
       - VALIDATION=duckdns
-      - EMAIL= # enter Email
+      - EMAIL=${EMAIL} #enter Email
       - DHLEVEL=2046
     volumes:
       - ./letsencrypt/:/config # set where you want to mount your volume
@@ -33,7 +33,7 @@ services:
       - PGID=1000 #optional
       - TZ=Europe/Berlin
       - SUBDOMAINS=stahldom
-      - TOKEN= #set Token
+      - TOKEN=${DUCKDNSTOKEN} #set Token
       - LOG_FILE=true #optional
     volumes:
       - ./duckdns/:/config #optional
@@ -48,9 +48,8 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Europe/Berlin
-      - PASSWORD= #update with secure password
-      - SUDO_PASSWORD= #update with secure password
+      - PASSWORD=${PASSWORD} #update with secure password
+      - SUDO_PASSWORD=${SUDO_PASSWORD} #update with secure password
     volumes:
       - ./code-server/:/config #set where you want to mount your workspace
     restart: unless-stopped
-

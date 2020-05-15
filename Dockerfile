@@ -41,14 +41,14 @@ ENV PATH "$PATH:/Android/sdk/platform-tools"
 RUN git clone https://github.com/flutter/flutter.git
 ENV PATH "$PATH:/flutter/bin"
 
-# Run basic check to download Dark SDK
-RUN flutter doctor
-
 # Set up the web-server device
 
 RUN flutter channel beta
 RUN flutter upgrade
 RUN flutter config --enable-web
+
+# Run basic check to download Dark SDK
+RUN flutter doctor
 
 # Add user
 
