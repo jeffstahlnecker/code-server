@@ -32,7 +32,7 @@ services:
       - PUID=1000 #optional
       - PGID=1000 #optional
       - TZ=Europe/Berlin
-      - SUBDOMAINS=stahldom
+      - SUBDOMAINS=${SUBDOMAINS} #enter your subdomain
       - TOKEN=${DUCKDNSTOKEN} #set Token
       - LOG_FILE=true #optional
     volumes:
