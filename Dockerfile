@@ -24,7 +24,7 @@ RUN apt update && apt install -y curl git unzip xz-utils zip libglu1-mesa openjd
 # Prepare Android directories and system variables
 
 RUN mkdir -p Android/sdk
-ENV ANDROID_SDK_ROOT /home/developer/Android/sdk
+ENV ANDROID_SDK_ROOT /Android/sdk
 RUN mkdir -p .android && touch .android/repositories.cfg
 
 # Set up Android SDK
@@ -40,3 +40,20 @@ ENV PATH "$PATH:/Android/sdk/platform-tools"
 
 RUN git clone https://github.com/flutter/flutter.git
 ENV PATH "$PATH:/flutter/bin"
+
+# Download Flutter SDK
+RUN git clone https://github.com/flutter/flutter.git
+ENV PATH "$PATH:/home/developer/flutter/bin"
+
+# Run basic check to download Dark SDK
+RUN flutter doctor
+
+# Set up the web-server device
+
+RUN flutter channel beta
+RUN flutter upgrade
+RUN flutter config --enable-web
+
+# Add user
+
+RUN useradd -ms /bin/bash coder
