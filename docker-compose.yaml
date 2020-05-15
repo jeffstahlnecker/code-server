@@ -2,8 +2,8 @@ version: '2.1'
 services:
   letsencrypt:
     image: linuxserver/letsencrypt
-	container_name: letsencrypt
-	env_file:
+    container_name: letsencrypt
+    env_file:
     - .env
     cap_add:
       - NET_ADMIN
@@ -24,7 +24,7 @@ services:
       - 443:443
       - 80:80
   duckdns:
-	env_file:
+    env_file:
     - .env
     image: linuxserver/duckdns
     container_name: duckdns
@@ -39,7 +39,7 @@ services:
       - ./duckdns/:/config #optional
     restart: unless-stopped
   code-server:
-	env_file:
+    env_file:
     - .env
     privileged: true
     build: .
