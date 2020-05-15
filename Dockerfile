@@ -21,10 +21,17 @@ RUN npm install -g gatsby-cli
 
 RUN apt update && apt install -y curl git unzip xz-utils zip libglu1-mesa openjdk-8-jdk wget
 
+
+# Add user
+
+RUN useradd -ms /bin/bash coder
+USER coder
+RUN cd /home/coder
+
 # Prepare Android directories and system variables
 
 RUN mkdir -p Android/sdk
-ENV ANDROID_SDK_ROOT /Android/sdk
+ENV ANDROID_SDK_ROOT /home/coder/Android/sdk
 RUN mkdir -p .android && touch .android/repositories.cfg
 
 # Set up Android SDK
@@ -34,10 +41,11 @@ RUN unzip sdk-tools.zip && rm sdk-tools.zip
 RUN mv tools Android/sdk/tools
 RUN cd Android/sdk/tools/bin && yes | ./sdkmanager --licenses
 RUN cd Android/sdk/tools/bin && ./sdkmanager "build-tools;29.0.2" "patcher;v4" "platform-tools" "platforms;android-29" "sources;android-29"
-ENV PATH "$PATH:/Android/sdk/platform-tools"
+ENV PATH "$PATH:/home/coder/Android/sdk/platform-tools"
 
 # Download Flutter SDK
 
+RUN cd /home/coder
 RUN git clone https://github.com/flutter/flutter.git
 ENV PATH "$PATH:/flutter/bin"
 
@@ -49,7 +57,3 @@ RUN flutter config --enable-web
 
 # Run basic check to download Dark SDK
 RUN flutter doctor
-
-# Add user
-
-RUN useradd -ms /bin/bash coder
